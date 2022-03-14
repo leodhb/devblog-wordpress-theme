@@ -1,6 +1,7 @@
 <?php
 
 add_theme_support( 'title-tag' );
+add_theme_support( 'post-thumbnails' );
 
 function startwordpress_scripts() {
 	wp_enqueue_style( 'bootstrap', get_template_directory_uri() . '/css/bootstrap.min.css', array(), '3.3.6' );
@@ -46,6 +47,11 @@ function setting_linkedin() { ?>
 	<input type="url" name="linkedin" id="linkedin" value="<?php echo get_option('linkedin'); ?>" />
 <?php }
 
+function setting_utterances() { ?>
+	<input type="text" name="utterance" id="utterance" placeholder="user/repo" value="<?php echo get_option('utterance'); ?>" />
+<?php }
+
+
 // Custom settings
 function custom_settings_add_menu() {
 	add_menu_page( 'Custom Settings', 'Custom Settings', 'manage_options', 'custom-settings', 'custom_settings_page', null, 99 );
@@ -58,10 +64,12 @@ function custom_settings_page_setup() {
     add_settings_field('twitter', 'Twitter URL', 'setting_twitter', 'theme-options', 'section');
     add_settings_field('github', 'GitHub URL', 'setting_github', 'theme-options', 'section');
     add_settings_field('linkedin', 'LinkedIn URL', 'setting_linkedin', 'theme-options', 'section');
-    
+    add_settings_field('utterance', 'Utteranc.es Github Repo', 'setting_utterances', 'theme-options', 'section');
+
     register_setting('section', 'twitter');
     register_setting('section', 'github');
     register_setting('section', 'linkedin');
+    register_setting('section', 'utterance');
 }
 
 add_action( 'admin_init', 'custom_settings_page_setup' );
